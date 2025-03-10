@@ -76,6 +76,53 @@ public class GameView : MonoBehaviour
     }
 
     //Change the square color based on condition
-    
+    public void ChangeSquareColor(int guessRow, string[] guessResults )
+    {
+        Button[] currentRow = null;
+
+        switch (guessRow)
+        {
+            case 1:
+                currentRow = guessRowOne;
+                break;
+            case 2:
+                currentRow = guessRowTwo;
+                break;
+            case 3:
+                currentRow = guessRowThree;
+                break;
+            case 4:
+                currentRow = guessRowFour;
+                break;
+            case 5:
+                currentRow = guessRowFive;
+                break;
+        }
+
+        for (int i = 0; i <currentRow.Length; i++)
+        {
+            //Default color white
+            Color buttonColor = Color.white;
+
+            //Change the color based on the result
+            switch (guessResults[i])
+            {
+                //Correct letter in correct spot
+                case "green":
+                    buttonColor = Color.green;
+                    break;
+                //Wrong letter compeletly
+                case "gray":
+                    buttonColor = Color.gray;
+                    break;
+                case "yellow":
+                    buttonColor = Color.yellow;
+                    break;
+            }
+
+            //Set the color
+            currentRow[i].GetComponent<Image>().color = buttonColor;
+        }
+    }
 
 }
