@@ -100,6 +100,14 @@ public class Nerdle : MonoBehaviour
         invalidCanvas.SetActive(true);
     }
 
+    //Update the score
+    public void UpdateScore(int score)
+    {
+        gameScoreText.text = score.ToString();
+        winScoreText.text = score.ToString();
+        loseScoreText.text = score.ToString();
+    }
+
 
     //Create the lists from text docs
     public void TextDocToList()
@@ -116,10 +124,9 @@ public class Nerdle : MonoBehaviour
     }
 
     //Submit the guess
-    public string SubmitGuess(TMP_InputField userInput)
+    public void SubmitGuess()
     {
-        userGuess = userInput.ToString().ToLower();
-        return userGuess;
+        userGuess = userInput.text.ToLower();
     }
 
     //Check for valid user Input
@@ -153,52 +160,141 @@ public class Nerdle : MonoBehaviour
     //Check the user guess against chosen random word
     private string[] CheckGuess()
     {
-        //Convert both words to char arrays
-        char[] guessArray = userGuess.ToCharArray();
-        char[] wordArray = chosenWord.ToCharArray();
-        string[] result = new string[guessArray.Length];
-
-        for (int i = 0; i < guessArray.Length; i++)
+        if (string.IsNullOrEmpty(userGuess))
         {
-            if(i < wordArray.Length && guessArray[i] == wordArray[i])
+            ShowInvalidCanvas();
+            return new string[0];
+        }
+        string[] result = new string[userGuess.Length];
+
+        if(userGuess == chosenWord)
+        {
+            score++;
+            UpdateScore(score);
+            ShowWinCanvas();
+            for (int i = 0; i < result.Length; i++)
             {
-                //Letter is correct and in the right spot
                 result[i] = "correct";
             }
-            else if (chosenWord.Contains(guessArray[i]))
-            {
-                //Letter is correct but in the wrong spot
-                result[i] = "contains";
-            }
-            else
-            {
-                //Letter is not in the word
-                result[i] = "wrong";
-            }
+            return result;
         }
-        return result;
+        else
+        {
+            //Convert both words to char arrays
+            char[] guessArray = userGuess.ToCharArray();
+            char[] wordArray = chosenWord.ToCharArray();
+
+            for (int i = 0; i < guessArray.Length; i++)
+            {
+                if (i < wordArray.Length && guessArray[i] == wordArray[i])
+                {
+                    //Letter is correct and in the right spot
+                    result[i] = "correct";
+                }
+                else if (chosenWord.Contains(guessArray[i]))
+                {
+                    //Letter is correct but in the wrong spot
+                    result[i] = "contains";
+                }
+                else
+                {
+                    //Letter is not in the word
+                    result[i] = "wrong";
+                }
+            }
+            return result;
+        }
     }
 
     //Color the squares based on result
-    private void ColorSquares()
+    private void ColorSquares(Button[]rowButtons)
     {
+        //Get the results from checkguess function
         string[] results = CheckGuess();
+
+        for(int i = 0; i < results.Length; i++)
+        {
+            //Get the button image component
+            Image buttonImage = rowButtons[i].GetComponent<Image>();
+            
+            //Color green if correct
+            if (results[i] == "correct")
+            {
+                buttonImage.color = Color.green;
+            }
+            
+            //Color yellow if contains
+            else if (results[i] == "contains")
+            {
+                buttonImage.color = Color.yellow;
+            }
+
+            //Color gray if incorrect
+            else
+            {
+                buttonImage.color = Color.gray;
+            }
+        }
+    }
+
+    //Get Guess Row for use
+    private Button[] GuessRow
+    {
+        get
+        {
+            switch (currentAttempt)
+            {
+                case 0:
+                    return guessRowOne;
+                case 1:
+                    return guessRowTwo;
+                case 2:
+                    return guessRowThree;
+                case 3:
+                    return guessRowFour;
+                case 4:
+                    return guessRowFive;
+                default:
+                    return new Button[0];
+            }
+        }
     }
 
     //Play the game if valid
-    public void PlayGame(int guessRow)
+    public void PlayGame()
     {
-        if (IsValidGuess(userGuess))
+        if(currentAttempt <= maxAttempt)
         {
-            Button[] currentRowButtons = GetGuessRow(currentAttempt);
-            //Displays the users guess in that row
-            DisplayLetters(currentRowButtons);
-            //Checks users guess against random word
-            CheckGuess(currentRowButtons);
-            //Colors the squares based on results
-            ColorSquares(currentRowButtons);
+            SubmitGuess();
+            
+            if(string.IsNullOrEmpty(userGuess) || !IsValidGuess(userGuess))
+            {
+                ShowInvalidCanvas();
+                return;
+            }
 
-            currentAttempt++;
+            else if (IsValidGuess(userGuess))
+            {
+                Button[] currentRowButtons = GuessRow;
+                //Displays the users guess in that row
+                DisplayLetters(currentRowButtons);
+                //Check users guess
+                CheckGuess();
+                //Colors the squares based on results
+                ColorSquares(currentRowButtons);
+
+
+                currentAttempt++;
+            }
+            else
+            {
+                ShowInvalidCanvas();
+            }
         }
+        else
+        {
+            ShowLoseCanvas();
+        }
+        
     }
 }
