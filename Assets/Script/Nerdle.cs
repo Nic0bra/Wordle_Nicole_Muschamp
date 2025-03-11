@@ -131,69 +131,74 @@ public class Nerdle : MonoBehaviour
             return true;
     }
 
-    
+    //Display the letters
+    private void DisplayLetters(Button[]rowButtons)
+    {
+        //Convert to char array
+        char[] guessArray = userGuess.ToCharArray();
+
+        for(int i = 0; i < guessArray.Length; i++)
+        {
+            if(i < rowButtons.Length)
+            {
+                TMP_Text buttonText = rowButtons[i].GetComponentInChildren<TMP_Text>();
+                if(buttonText != null)
+                {
+                    buttonText.text = guessArray[i].ToString();
+                }
+            }
+        }
+    }
+
+    //Check the user guess against chosen random word
+    private string[] CheckGuess()
+    {
+        //Convert both words to char arrays
+        char[] guessArray = userGuess.ToCharArray();
+        char[] wordArray = chosenWord.ToCharArray();
+        string[] result = new string[guessArray.Length];
+
+        for (int i = 0; i < guessArray.Length; i++)
+        {
+            if(i < wordArray.Length && guessArray[i] == wordArray[i])
+            {
+                //Letter is correct and in the right spot
+                result[i] = "correct";
+            }
+            else if (chosenWord.Contains(guessArray[i]))
+            {
+                //Letter is correct but in the wrong spot
+                result[i] = "contains";
+            }
+            else
+            {
+                //Letter is not in the word
+                result[i] = "wrong";
+            }
+        }
+        return result;
+    }
+
+    //Color the squares based on result
+    private void ColorSquares()
+    {
+        string[] results = CheckGuess();
+    }
 
     //Play the game if valid
     public void PlayGame(int guessRow)
     {
-        if(currentAttempt <= maxAttempt)
+        if (IsValidGuess(userGuess))
         {
+            Button[] currentRowButtons = GetGuessRow(currentAttempt);
+            //Displays the users guess in that row
+            DisplayLetters(currentRowButtons);
+            //Checks users guess against random word
+            CheckGuess(currentRowButtons);
+            //Colors the squares based on results
+            ColorSquares(currentRowButtons);
+
             currentAttempt++;
-
-            if (IsValidGuess(userGuess))
-            {
-                //Convert chosenWord into array
-                char[] wordArray = chosenWord.ToCharArray();
-                //Convert guess into array
-                char[] guessArray = userGuess.ToCharArray();
-
-                foreach (char letter in guessArray)
-                {
-                    Button[] currentRow = null;
-
-                    switch (guessRow)
-                    {
-                        case 1:
-                            currentRow = guessRowOne;
-                            break;
-                        case 2:
-                            currentRow = guessRowTwo;
-                            break;
-                        case 3:
-                            currentRow = guessRowThree;
-                            break;
-                        case 4:
-                            currentRow = guessRowFour;
-                            break;
-                        case 5:
-                            currentRow = guessRowFive;
-                            break;
-                    }
-
-                    for (int i = 0; i < currentRow.Length; i++)
-                    {
-                        currentRow[i].GetComponentInChildren<TMP_Text>().text = guessArray[letter].ToString().ToLower();
-                    }
-                }
-                //Loop through the char array to check the guess
-                foreach (char letter in guessArray)
-                {
-                    if (letter == wordArray[0])
-                    {
-                        //Color the square green
-                    }
-                    else if (wordArray.Contains(letter))
-                    {
-                        //Color the square yellow
-                    }
-                    else
-                    {
-                        //Color the square gray
-                    }
-
-                }
-
-            }
         }
     }
 }
