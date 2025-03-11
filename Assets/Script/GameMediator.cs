@@ -1,4 +1,5 @@
 using System;
+using TMPro;
 using UnityEngine;
 
 public class GameMediator : MonoBehaviour
@@ -16,20 +17,23 @@ public class GameMediator : MonoBehaviour
     //Start Game once clicked start
     public void StartGame()
     {
-        gameLogic.StartGame();
         gameView.ShowGameCanvas();
+        gameLogic.StartGame();
     }
 
-    //Method to handle user input
+    //Method to check for Valid usser Input
     public void SubmitGuess(string userGuess)
     {
+        if (string.IsNullOrEmpty(userGuess))
+        {
+            gameView.ShowInvalidCanvas();
+            return;
+        }
         bool isValid = gameLogic.CheckGuess(userGuess);
 
         if (isValid)
         {
-            //If user guesses the word pudate score and display win canvas
-            gameView.UpdateScore(gameLogic.Score);
-            gameView.ShowWinCanvas();
+            gameLogic.CheckGuess(userGuess);
         }
         
         else

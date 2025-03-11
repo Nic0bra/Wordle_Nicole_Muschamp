@@ -1,11 +1,11 @@
-using NUnit.Framework;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class GameLogic : MonoBehaviour
 {
     //Initialize Variables
-    GameView gameView;
+    [SerializeField] GameView gameView;
+    [SerializeField] GameMediator gameMediator;
     [SerializeField] TextAsset possibleAnswers;
     [SerializeField] TextAsset allowedWords;
     List<string> possibleAnswersList;
@@ -17,12 +17,11 @@ public class GameLogic : MonoBehaviour
 
     // Start game by loading text files into lsits and choosing a random one
     public void StartGame()
-    {    
-        //Load words from text file
+    {
         LoadWords();
-
-        //Choose random word
         ChoseRandomWord();
+
+        gameMediator.StartGame();
 
         Score = 0;
         currentAttempt = 0;
@@ -46,8 +45,9 @@ public class GameLogic : MonoBehaviour
     public bool CheckGuess(string userGuess)
     {
         currentAttempt++;
+
         //Check if guess is valid
-        if (!allowedWordsList.Contains(userGuess.ToLower()) || !possibleAnswersList.Contains(userGuess.ToLower()))
+        if (!allowedWordsList.Contains(userGuess.ToLower()) && !possibleAnswersList.Contains(userGuess.ToLower()))
         {
             return false;
         }
@@ -66,7 +66,6 @@ public class GameLogic : MonoBehaviour
     public void NextRound()
     {
         currentAttempt = 0;
-        chosenWord = null;
         ChoseRandomWord();
         gameView.ResetBoard();
         gameView.ClearUserInput();
@@ -76,7 +75,6 @@ public class GameLogic : MonoBehaviour
     //Reset game for new game
     public void ResetGame()
     {
-        chosenWord = null;
         StartGame();
     }
 }

@@ -45,13 +45,6 @@ public class GameView : MonoBehaviour
         loseCanvas.SetActive(false);
         invalidCanvas.SetActive(false);
     }
-
-    //Clear text field
-    public void ClearUserInput()
-    {
-        userInput.text = "";
-    }
-    
     //Show win canvas
     public void ShowWinCanvas()
     {
@@ -75,10 +68,12 @@ public class GameView : MonoBehaviour
     //Show invalid canvas
     public void ShowInvalidCanvas()
     {
-        if(currentInvalidCanvas == null)
+        if(currentInvalidCanvas != null)
         {
-            currentInvalidCanvas = Instantiate(invalidCanvas);
+            currentInvalidCanvas.SetActive(false);
+            Destroy(currentInvalidCanvas);
         }
+        currentInvalidCanvas = Instantiate(invalidCanvas);
         currentInvalidCanvas.SetActive(true);
     }
 
@@ -87,6 +82,7 @@ public class GameView : MonoBehaviour
     {
         if(currentInvalidCanvas != null)
         {
+            Destroy(currentInvalidCanvas);
             currentInvalidCanvas.SetActive(false);
         }
     }
@@ -99,20 +95,18 @@ public class GameView : MonoBehaviour
         loseScoreText.text = score.ToString();
     }
 
+    //Clear text field
+    public void ClearUserInput()
+    {
+        userInput.text = "";
+    }
+
     //When user selects submit
-    public void SubmitGuess()
+    public void SubmitGuessButton()
     {
         string userGuess = userInput.text;
-
-        if(!string.IsNullOrEmpty(userGuess))
-        {
-            gameMediator.SubmitGuess(userGuess);
-        }
-
-        else
-        {
-            invalidCanvas.SetActive(true);
-        }
+        gameMediator.SubmitGuess(userGuess);
+        
     }
 
     //Display the guessed Letter
@@ -122,11 +116,21 @@ public class GameView : MonoBehaviour
 
         switch (guessRow)
         {
-            case 1: currentRow = guessRowOne; break;
-            case 2: currentRow = guessRowTwo; break;
-            case 3: currentRow = guessRowThree; break;
-            case 4: currentRow = guessRowFour; break;
-            case 5: currentRow = guessRowFive; break;
+            case 1: 
+                currentRow = guessRowOne; 
+                break;
+            case 2: 
+                currentRow = guessRowTwo; 
+                break;
+            case 3: 
+                currentRow = guessRowThree; 
+                break;
+            case 4: 
+                currentRow = guessRowFour; 
+                break;
+            case 5: 
+                currentRow = guessRowFive; 
+                break;
         }
 
         for (int i = 0; i < currentRow.Length; i++)
@@ -201,6 +205,4 @@ public class GameView : MonoBehaviour
             }
         }
     }
-    
-
 }

@@ -5130,9 +5130,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 953113553}
-  - component: {fileID: 953113554}
   - component: {fileID: 953113555}
-  - component: {fileID: 953113556}
   m_Layer: 0
   m_Name: Game Controller
   m_TagString: Untagged
@@ -5155,58 +5153,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &953113554
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 953113551}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6cf7f086d1cdc484885c5699f9e294d9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  gameMediator: {fileID: 953113556}
-  startCanvas: {fileID: 480997453}
-  gameCanvas: {fileID: 14739535}
-  winCanvas: {fileID: 881885231}
-  loseCanvas: {fileID: 1549155613}
-  invalidCanvas: {fileID: 680922853}
-  userInput: {fileID: 933314975}
-  gameScoreText: {fileID: 332097957}
-  winScoreText: {fileID: 1104784678}
-  loseScoreText: {fileID: 995303153}
-  guessRowOne:
-  - {fileID: 1886564260}
-  - {fileID: 1686962616}
-  - {fileID: 830473835}
-  - {fileID: 2067880311}
-  - {fileID: 2141060517}
-  guessRowTwo:
-  - {fileID: 2042988936}
-  - {fileID: 1810839501}
-  - {fileID: 1518075725}
-  - {fileID: 1003066332}
-  - {fileID: 1642530038}
-  guessRowThree:
-  - {fileID: 1449873595}
-  - {fileID: 982706410}
-  - {fileID: 1124251837}
-  - {fileID: 1902466881}
-  - {fileID: 1465384955}
-  guessRowFour:
-  - {fileID: 751481010}
-  - {fileID: 1740741873}
-  - {fileID: 536328899}
-  - {fileID: 970452674}
-  - {fileID: 432458942}
-  guessRowFive:
-  - {fileID: 1026169869}
-  - {fileID: 715085758}
-  - {fileID: 50478291}
-  - {fileID: 1119480083}
-  - {fileID: 1088925423}
 --- !u!114 &953113555
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5219,22 +5165,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f30e6958a7018db4d8d01854d23e3bfa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameView: {fileID: 2120850413}
+  gameMediator: {fileID: 2107031225}
   possibleAnswers: {fileID: 4900000, guid: ed63b5995dbe1bd45a92b713dfc22a11, type: 3}
   allowedWords: {fileID: 4900000, guid: 516f62752023e1b4a976b9a836d80778, type: 3}
---- !u!114 &953113556
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 953113551}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 43a455c8c134b5341926f051fdd6a840, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  gameLogic: {fileID: 953113555}
-  gameView: {fileID: 953113554}
 --- !u!1 &970452672
 GameObject:
   m_ObjectHideFlags: 0
@@ -6376,6 +6310,85 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1124251835}
   m_CullTransparentMesh: 1
+--- !u!1 &1140927095
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1140927098}
+  - component: {fileID: 1140927097}
+  - component: {fileID: 1140927096}
+  m_Layer: 0
+  m_Name: EventSystem
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1140927096
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1140927095}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 01614664b831546d2ae94a42149d80ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SendPointerHoverToParent: 1
+  m_MoveRepeatDelay: 0.5
+  m_MoveRepeatRate: 0.1
+  m_XRTrackingOrigin: {fileID: 0}
+  m_ActionsAsset: {fileID: -944628639613478452, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_PointAction: {fileID: -1654692200621890270, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_MoveAction: {fileID: -8784545083839296357, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_SubmitAction: {fileID: 392368643174621059, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_CancelAction: {fileID: 7727032971491509709, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_LeftClickAction: {fileID: 3001919216989983466, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_MiddleClickAction: {fileID: -2185481485913320682, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_RightClickAction: {fileID: -4090225696740746782, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_ScrollWheelAction: {fileID: 6240969308177333660, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_TrackedDevicePositionAction: {fileID: 6564999863303420839, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_TrackedDeviceOrientationAction: {fileID: 7970375526676320489, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_DeselectOnBackgroundClick: 1
+  m_PointerBehavior: 0
+  m_CursorLockBehavior: 0
+  m_ScrollDeltaPerTick: 6
+--- !u!114 &1140927097
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1140927095}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76c392e42b5098c458856cdf6ecaaaa1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_FirstSelected: {fileID: 0}
+  m_sendNavigationEvents: 1
+  m_DragThreshold: 10
+--- !u!4 &1140927098
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1140927095}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1143972808
 GameObject:
   m_ObjectHideFlags: 0
@@ -6536,7 +6549,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 953113554}
+      - m_Target: {fileID: 2120850413}
         m_TargetAssemblyTypeName: GameView, Assembly-CSharp
         m_MethodName: ShowGameCanvas
         m_Mode: 1
@@ -6938,10 +6951,10 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 953113556}
-        m_TargetAssemblyTypeName: GameMediator, Assembly-CSharp
-        m_MethodName: SubmitGuess
-        m_Mode: 5
+      - m_Target: {fileID: 2120850413}
+        m_TargetAssemblyTypeName: GameView, Assembly-CSharp
+        m_MethodName: SubmitGuessButton
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -9247,7 +9260,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2084679906}
   m_CullTransparentMesh: 1
---- !u!1 &2113246451
+--- !u!1 &2107031224
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -9255,71 +9268,122 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 2113246454}
-  - component: {fileID: 2113246453}
-  - component: {fileID: 2113246452}
+  - component: {fileID: 2107031226}
+  - component: {fileID: 2107031225}
   m_Layer: 0
-  m_Name: EventSystem
+  m_Name: Game Mediator
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &2113246452
+--- !u!114 &2107031225
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2113246451}
+  m_GameObject: {fileID: 2107031224}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 01614664b831546d2ae94a42149d80ac, type: 3}
+  m_Script: {fileID: 11500000, guid: 43a455c8c134b5341926f051fdd6a840, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_SendPointerHoverToParent: 1
-  m_MoveRepeatDelay: 0.5
-  m_MoveRepeatRate: 0.1
-  m_XRTrackingOrigin: {fileID: 0}
-  m_ActionsAsset: {fileID: -944628639613478452, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
-  m_PointAction: {fileID: -1654692200621890270, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
-  m_MoveAction: {fileID: -8784545083839296357, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
-  m_SubmitAction: {fileID: 392368643174621059, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
-  m_CancelAction: {fileID: 7727032971491509709, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
-  m_LeftClickAction: {fileID: 3001919216989983466, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
-  m_MiddleClickAction: {fileID: -2185481485913320682, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
-  m_RightClickAction: {fileID: -4090225696740746782, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
-  m_ScrollWheelAction: {fileID: 6240969308177333660, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
-  m_TrackedDevicePositionAction: {fileID: 6564999863303420839, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
-  m_TrackedDeviceOrientationAction: {fileID: 7970375526676320489, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
-  m_DeselectOnBackgroundClick: 1
-  m_PointerBehavior: 0
-  m_CursorLockBehavior: 0
-  m_ScrollDeltaPerTick: 6
---- !u!114 &2113246453
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2113246451}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 76c392e42b5098c458856cdf6ecaaaa1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_FirstSelected: {fileID: 0}
-  m_sendNavigationEvents: 1
-  m_DragThreshold: 10
---- !u!4 &2113246454
+  gameLogic: {fileID: 953113555}
+  gameView: {fileID: 2120850413}
+--- !u!4 &2107031226
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2113246451}
+  m_GameObject: {fileID: 2107031224}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2120850412
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2120850414}
+  - component: {fileID: 2120850413}
+  m_Layer: 0
+  m_Name: View Controller
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &2120850413
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2120850412}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6cf7f086d1cdc484885c5699f9e294d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameMediator: {fileID: 2107031225}
+  startCanvas: {fileID: 480997453}
+  gameCanvas: {fileID: 14739535}
+  winCanvas: {fileID: 881885231}
+  loseCanvas: {fileID: 1549155613}
+  invalidCanvas: {fileID: 680922853}
+  userInput: {fileID: 933314975}
+  gameScoreText: {fileID: 332097957}
+  winScoreText: {fileID: 1104784678}
+  loseScoreText: {fileID: 995303153}
+  guessRowOne:
+  - {fileID: 1886564260}
+  - {fileID: 1686962616}
+  - {fileID: 830473835}
+  - {fileID: 2067880311}
+  - {fileID: 2141060517}
+  guessRowTwo:
+  - {fileID: 2042988936}
+  - {fileID: 1810839501}
+  - {fileID: 1518075725}
+  - {fileID: 1003066332}
+  - {fileID: 1642530038}
+  guessRowThree:
+  - {fileID: 1449873595}
+  - {fileID: 982706410}
+  - {fileID: 1124251837}
+  - {fileID: 1902466881}
+  - {fileID: 1465384955}
+  guessRowFour:
+  - {fileID: 751481010}
+  - {fileID: 1740741873}
+  - {fileID: 536328899}
+  - {fileID: 970452674}
+  - {fileID: 432458942}
+  guessRowFive:
+  - {fileID: 1026169869}
+  - {fileID: 715085758}
+  - {fileID: 50478291}
+  - {fileID: 1119480083}
+  - {fileID: 1088925423}
+--- !u!4 &2120850414
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2120850412}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -9839,7 +9903,7 @@ PrefabInstance:
     - target: {fileID: 5113720276255753971, guid: 8047523ed29561f4f89dac6ff5d99428, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 953113554}
+      objectReference: {fileID: 2120850413}
     - target: {fileID: 5113720276255753971, guid: 8047523ed29561f4f89dac6ff5d99428, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 2
@@ -10032,10 +10096,12 @@ SceneRoots:
   m_Roots:
   - {fileID: 519420032}
   - {fileID: 619394802}
+  - {fileID: 2107031226}
+  - {fileID: 2120850414}
   - {fileID: 953113553}
   - {fileID: 480997459}
-  - {fileID: 3748289764224194902}
   - {fileID: 14739541}
   - {fileID: 4378879047678417855}
   - {fileID: 2442476552565711603}
-  - {fileID: 2113246454}
+  - {fileID: 3748289764224194902}
+  - {fileID: 1140927098}
