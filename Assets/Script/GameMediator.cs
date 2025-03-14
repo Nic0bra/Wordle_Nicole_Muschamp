@@ -7,6 +7,7 @@ public class GameMediator : MonoBehaviour
     //Reference Scripts
     [SerializeField] GameLogic gameLogic;
     [SerializeField] GameView gameView;
+    public TMP_InputField userInput;
 
     void Start()
     {
@@ -21,30 +22,12 @@ public class GameMediator : MonoBehaviour
         gameLogic.StartGame();
     }
 
-    //Method to check for Valid usser Input
-    public void SubmitGuess(string userGuess)
+    //Get user input
+    public string GetUserInput()
     {
-        if (string.IsNullOrEmpty(userGuess))
-        {
-            gameView.ShowInvalidCanvas();
-            return;
-        }
-        bool isValid = gameLogic.CheckGuess(userGuess);
-
-        if (isValid)
-        {
-            gameLogic.CheckGuess(userGuess);
-        }
-        
-        else
-        {
-            //If the guess is invalid
-            gameView.ShowInvalidCanvas();
-        }
-
-        gameView.ClearUserInput();
+        string userGuess = userInput.ToString().ToLower();
+        return userGuess;
     }
-
     public void PlayAgain()
     {
         gameLogic.NextRound();
@@ -55,9 +38,9 @@ public class GameMediator : MonoBehaviour
     //Method to restart the game
     public void RestartGame()
     {
-        gameLogic.ResetGame();
         gameView.ResetBoard();
         gameView.ShowStartCanvas();
         gameView.UpdateScore(0);
+        gameView.ClearUserInput();
     }
 }

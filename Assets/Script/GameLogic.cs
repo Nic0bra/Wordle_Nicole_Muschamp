@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SocialPlatforms.Impl;
 
 public class GameLogic : MonoBehaviour
 {
@@ -11,7 +12,7 @@ public class GameLogic : MonoBehaviour
     List<string> possibleAnswersList;
     List<string> allowedWordsList;
     string chosenWord;
-    public int Score { get; private set; }
+    public int score;
     int maxAttempts = 5;
     int currentAttempt = 0;
 
@@ -20,11 +21,15 @@ public class GameLogic : MonoBehaviour
     {
         LoadWords();
         ChoseRandomWord();
-
-        gameMediator.StartGame();
-
-        Score = 0;
+        score = 0;
         currentAttempt = 0;
+
+        while (currentAttempt <= maxAttempts)
+        {
+            string userGuess = gameMediator.GetUserInput();
+            CheckGuess(userGuess); 
+        }
+
     }
 
     //Load the words into a list
@@ -41,25 +46,54 @@ public class GameLogic : MonoBehaviour
         chosenWord = possibleAnswersList[randomIndex].Trim();
     }
 
-    //Check the player's guess against either list
-    public bool CheckGuess(string userGuess)
+    //Check the user guess against chosen random word
+    public string[] CheckGuess(string userGuess)
     {
-        currentAttempt++;
-
-        //Check if guess is valid
-        if (!allowedWordsList.Contains(userGuess.ToLower()) && !possibleAnswersList.Contains(userGuess.ToLower()))
+        if (string.IsNullOrEmpty(userGuess))
         {
-            return false;
+            gameView.ShowInvalidCanvas();
+            return new string[0];
         }
+        string[] result = new string[userGuess.Length];
 
-        //If guess is correct
-        if(userGuess.ToLower() == chosenWord)
+        if (userGuess == chosenWord)
         {
-            Score++;
-            return true;
+            score++;
+            gameView.UpdateScore(score);
+            gameView.ShowWinCanvas();
+            for (int i = 0; i < result.Length; i++)
+            {
+                result[i] = "correct";
+            }
+            return result;
         }
+        else
+        {
+            //Convert both words to char arrays
+            char[] guessArray = userGuess.ToCharArray();
+            char[] wordArray = chosenWord.ToCharArray();
 
-        return false;
+            for (int i = 0; i < guessArray.Length; i++)
+            {
+                if (i < wordArray.Length && guessArray[i] == wordArray[i])
+                {
+                    //Letter is correct and in the right spot
+                    result[i] = "correct";
+                }
+                else if (chosenWord.Contains(guessArray[i]))
+                {
+                    //Letter is correct but in the wrong spot
+                    result[i] = "contains";
+                }
+                else
+                {
+                    //Letter is not in the word
+                    result[i] = "wrong";
+                }
+            }
+            currentAttempt--;
+            return result;
+        }
     }
 
     //Reset board for next round
@@ -70,11 +104,5 @@ public class GameLogic : MonoBehaviour
         gameView.ResetBoard();
         gameView.ClearUserInput();
 
-    }
-
-    //Reset game for new game
-    public void ResetGame()
-    {
-        StartGame();
     }
 }

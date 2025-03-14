@@ -35,7 +35,7 @@ public class GameView : MonoBehaviour
         loseCanvas.SetActive(false);
         invalidCanvas.SetActive(false);
     }
-    
+
     //Show game canvas
     public void ShowGameCanvas()
     {
@@ -68,7 +68,7 @@ public class GameView : MonoBehaviour
     //Show invalid canvas
     public void ShowInvalidCanvas()
     {
-        if(currentInvalidCanvas != null)
+        if (currentInvalidCanvas != null)
         {
             currentInvalidCanvas.SetActive(false);
             Destroy(currentInvalidCanvas);
@@ -80,7 +80,7 @@ public class GameView : MonoBehaviour
     //Hide invalid canvas
     public void HideInvalidCanvas()
     {
-        if(currentInvalidCanvas != null)
+        if (currentInvalidCanvas != null)
         {
             Destroy(currentInvalidCanvas);
             currentInvalidCanvas.SetActive(false);
@@ -101,14 +101,6 @@ public class GameView : MonoBehaviour
         userInput.text = "";
     }
 
-    //When user selects submit
-    public void SubmitGuessButton()
-    {
-        string userGuess = userInput.text;
-        gameMediator.SubmitGuess(userGuess);
-        
-    }
-
     //Display the guessed Letter
     public void GuessLetterDisplay(int guessRow, string[] letters)
     {
@@ -116,20 +108,20 @@ public class GameView : MonoBehaviour
 
         switch (guessRow)
         {
-            case 1: 
-                currentRow = guessRowOne; 
+            case 1:
+                currentRow = guessRowOne;
                 break;
-            case 2: 
-                currentRow = guessRowTwo; 
+            case 2:
+                currentRow = guessRowTwo;
                 break;
-            case 3: 
-                currentRow = guessRowThree; 
+            case 3:
+                currentRow = guessRowThree;
                 break;
-            case 4: 
-                currentRow = guessRowFour; 
+            case 4:
+                currentRow = guessRowFour;
                 break;
-            case 5: 
-                currentRow = guessRowFive; 
+            case 5:
+                currentRow = guessRowFive;
                 break;
         }
 
@@ -141,7 +133,7 @@ public class GameView : MonoBehaviour
 
 
     //Change the square color based on condition
-    public void ChangeSquareColor(int guessRow, string[] guessResults )
+    public void ChangeSquareColor(int guessRow, string[] guessResults)
     {
         Button[] currentRow = null;
 
@@ -197,7 +189,7 @@ public class GameView : MonoBehaviour
 
         foreach (Button[] row in allRows)
         {
-            foreach(Button button in row)
+            foreach (Button button in row)
             {
                 button.GetComponent<Image>().color = Color.white;
 
@@ -206,3 +198,5 @@ public class GameView : MonoBehaviour
         }
     }
 }
+
+
