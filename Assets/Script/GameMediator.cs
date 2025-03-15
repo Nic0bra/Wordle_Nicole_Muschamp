@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SocialPlatforms.Impl;
 
 public class GameMediator : MonoBehaviour
 {
@@ -39,6 +40,7 @@ public class GameMediator : MonoBehaviour
     {
         gameView.ResetBoard();
         gameView.ShowStartCanvas();
+        gameLogic.score = 0;
         gameView.UpdateScore(0);
         gameView.ClearUserInput();
     }
@@ -54,8 +56,8 @@ public class GameMediator : MonoBehaviour
                 string[] guessResult = gameLogic.CheckGuess(userGuess);
                 if(gameLogic.currentAttempt < gameLogic.maxAttempts)
                 {
-                    gameView.GuessLetterDisplay(gameLogic.currentAttempt +1, userGuess.ToCharArray().Select(c => c.ToString()).ToArray());
-                    gameView.ChangeSquareColor(gameLogic.currentAttempt +1, guessResult);
+                    gameView.GuessLetterDisplay(gameLogic.currentAttempt, userGuess.ToCharArray().Select(c => c.ToString()).ToArray());
+                    gameView.ChangeSquareColor(gameLogic.currentAttempt, guessResult);
                     gameView.ClearUserInput();
                 }
             }

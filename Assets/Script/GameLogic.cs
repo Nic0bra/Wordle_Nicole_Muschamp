@@ -54,7 +54,7 @@ public class GameLogic : MonoBehaviour
         //Check if they still have a turn
         if (currentAttempt >= maxAttempts)
         {
-            gameView.ShowLoseCanvas();
+            gameView.ShowLoseCanvas(chosenWord);
             return new string[0];
         }
 
@@ -77,7 +77,7 @@ public class GameLogic : MonoBehaviour
         {
             score++;
             gameView.UpdateScore(score);
-            gameView.ShowWinCanvas();
+            gameView.ShowWinCanvas(chosenWord);
             return new string[] { "green", "green", "green", "green", "green" };
         }
 
@@ -137,7 +137,7 @@ public class GameLogic : MonoBehaviour
 
         if (currentAttempt >= maxAttempts)
         {
-            gameView.ShowLoseCanvas();
+            gameView.ShowLoseCanvas(chosenWord);
         }
         return result;
     }

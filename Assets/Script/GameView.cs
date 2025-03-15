@@ -18,6 +18,8 @@ public class GameView : MonoBehaviour
     [SerializeField] TMP_Text gameScoreText;
     [SerializeField] TMP_Text winScoreText;
     [SerializeField] TMP_Text loseScoreText;
+    [SerializeField] TMP_Text chosenWordLoseCanvas;
+    [SerializeField] TMP_Text chosenWordWinCanvas;
 
     //Arrays to access game board
     [SerializeField] Button[] guessRowOne;
@@ -46,23 +48,25 @@ public class GameView : MonoBehaviour
         invalidCanvas.SetActive(false);
     }
     //Show win canvas
-    public void ShowWinCanvas()
+    public void ShowWinCanvas(string chosenWord)
     {
         startCanvas.SetActive(false);
         gameCanvas.SetActive(false);
         winCanvas.SetActive(true);
         loseCanvas.SetActive(false);
         invalidCanvas.SetActive(false);
+        chosenWordWinCanvas.text = chosenWord.ToString();
     }
 
     //Show lose canvas
-    public void ShowLoseCanvas()
+    public void ShowLoseCanvas(string chosenWord)
     {
         startCanvas.SetActive(false);
         gameCanvas.SetActive(false);
         winCanvas.SetActive(false);
         loseCanvas.SetActive(true);
         invalidCanvas.SetActive(false);
+        chosenWordLoseCanvas.text = chosenWord.ToString();
     }
 
     //Show invalid canvas
@@ -172,6 +176,7 @@ public class GameView : MonoBehaviour
                 case "gray":
                     buttonColor = Color.gray;
                     break;
+                //Right letter in wrong spot
                 case "yellow":
                     buttonColor = Color.yellow;
                     break;
