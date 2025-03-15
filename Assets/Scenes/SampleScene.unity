@@ -1469,6 +1469,8 @@ MonoBehaviour:
   possibleAnswers: {fileID: 4900000, guid: ed63b5995dbe1bd45a92b713dfc22a11, type: 3}
   allowedWords: {fileID: 4900000, guid: 516f62752023e1b4a976b9a836d80778, type: 3}
   score: 0
+  maxAttempts: 5
+  currentAttempt: 0
 --- !u!4 &257232147
 Transform:
   m_ObjectHideFlags: 0
@@ -3473,7 +3475,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6cf7f086d1cdc484885c5699f9e294d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameMediator: {fileID: 0}
+  gameMediator: {fileID: 318569083}
   startCanvas: {fileID: 480997453}
   gameCanvas: {fileID: 14739535}
   winCanvas: {fileID: 881885231}
@@ -6865,9 +6867,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 257232146}
-        m_TargetAssemblyTypeName: GameLogic, Assembly-CSharp
-        m_MethodName: ResetGame
+      - m_Target: {fileID: 318569083}
+        m_TargetAssemblyTypeName: GameMediator, Assembly-CSharp
+        m_MethodName: RestartGame
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -7134,9 +7136,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 655752106}
-        m_TargetAssemblyTypeName: GameView, Assembly-CSharp
-        m_MethodName: SubmitGuessButton
+      - m_Target: {fileID: 318569083}
+        m_TargetAssemblyTypeName: GameMediator, Assembly-CSharp
+        m_MethodName: SubmitGuess
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

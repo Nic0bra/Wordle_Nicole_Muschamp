@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 
@@ -25,13 +26,11 @@ public class GameMediator : MonoBehaviour
     //Get user input
     public string GetUserInput()
     {
-        string userGuess = userInput.ToString().ToLower();
-        return userGuess;
+        return userInput.text.Trim().ToLower();
     }
     public void PlayAgain()
     {
         gameLogic.NextRound();
-
         gameView.ShowGameCanvas();
     }
 
@@ -42,5 +41,24 @@ public class GameMediator : MonoBehaviour
         gameView.ShowStartCanvas();
         gameView.UpdateScore(0);
         gameView.ClearUserInput();
+    }
+
+    //Submit user guess
+    public void SubmitGuess()
+    {
+        if(gameLogic != null && gameView != null)
+        {
+            string userGuess = GetUserInput();
+            if (!string.IsNullOrEmpty(userGuess))
+            {
+                string[] guessResult = gameLogic.CheckGuess(userGuess);
+                if(gameLogic.currentAttempt < gameLogic.maxAttempts)
+                {
+                    gameView.GuessLetterDisplay(gameLogic.currentAttempt +1, userGuess.ToCharArray().Select(c => c.ToString()).ToArray());
+                    gameView.ChangeSquareColor(gameLogic.currentAttempt +1, guessResult);
+                    gameView.ClearUserInput();
+                }
+            }
+        }
     }
 }

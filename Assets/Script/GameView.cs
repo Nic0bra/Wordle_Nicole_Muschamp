@@ -196,6 +196,9 @@ public class GameView : MonoBehaviour
                 button.GetComponentInChildren<TMP_Text>().text = "";
             }
         }
+
+        //Clear user input
+        ClearUserInput();
     }
 }
 

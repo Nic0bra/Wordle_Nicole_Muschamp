@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
 using UnityEngine.SocialPlatforms.Impl;
 
@@ -13,8 +14,8 @@ public class GameLogic : MonoBehaviour
     List<string> allowedWordsList;
     string chosenWord;
     public int score;
-    int maxAttempts = 5;
-    int currentAttempt = 0;
+    public int maxAttempts = 5;
+    public int currentAttempt = 0;
 
     // Start game by loading text files into lsits and choosing a random one
     public void StartGame()
@@ -24,11 +25,9 @@ public class GameLogic : MonoBehaviour
         score = 0;
         currentAttempt = 0;
 
-        while (currentAttempt <= maxAttempts)
-        {
-            string userGuess = gameMediator.GetUserInput();
-            CheckGuess(userGuess); 
-        }
+        gameView.UpdateScore(score);
+        gameView.ResetBoard();
+        gameView.ClearUserInput();
 
     }
 
@@ -37,6 +36,9 @@ public class GameLogic : MonoBehaviour
     {
         possibleAnswersList = new List<string>(possibleAnswers.text.Split('\n'));
         allowedWordsList = new List<string>(allowedWords.text.Split('\n'));
+
+        possibleAnswersList = possibleAnswersList.ConvertAll(word => word.Trim().ToLower());
+        allowedWordsList = allowedWordsList.ConvertAll(word => word.Trim().ToLower());
     }
 
     //Choose word at random from possible answers list
@@ -49,58 +51,97 @@ public class GameLogic : MonoBehaviour
     //Check the user guess against chosen random word
     public string[] CheckGuess(string userGuess)
     {
-        if (string.IsNullOrEmpty(userGuess))
+        //Check if they still have a turn
+        if (currentAttempt >= maxAttempts)
+        {
+            gameView.ShowLoseCanvas();
+            return new string[0];
+        }
+
+        string formatUserGuess = userGuess.Trim().ToLower();
+
+        //Check if the word is in allowed words or possible answers
+        //bool isValidWord = allowedWordsList.Contains(formatUserGuess) || possibleAnswersList.Contains(formatUserGuess);
+
+        //Display ivalid canvas if not a real word or empty
+        if (!(allowedWordsList.Contains(formatUserGuess) || possibleAnswersList.Contains(formatUserGuess)) || string.IsNullOrEmpty(formatUserGuess))
         {
             gameView.ShowInvalidCanvas();
             return new string[0];
         }
-        string[] result = new string[userGuess.Length];
 
-        if (userGuess == chosenWord)
+        string[] result = new string[5];
+
+        //If the word is the chosen word
+        if (formatUserGuess == chosenWord.ToLower())
         {
             score++;
             gameView.UpdateScore(score);
             gameView.ShowWinCanvas();
-            for (int i = 0; i < result.Length; i++)
-            {
-                result[i] = "correct";
-            }
-            return result;
+            return new string[] { "green", "green", "green", "green", "green" };
         }
-        else
-        {
-            //Convert both words to char arrays
-            char[] guessArray = userGuess.ToCharArray();
-            char[] wordArray = chosenWord.ToCharArray();
 
-            for (int i = 0; i < guessArray.Length; i++)
+        //Convert words to char arrays
+        char[] guessArray = formatUserGuess.ToCharArray();
+        char[] wordArray = chosenWord.ToLower().ToCharArray();
+        char[] wordArrayCopy = (char[])wordArray.Clone();
+        string[] tempResult = new string[5];
+
+        //First pass- Mark correct letters in the correct positions
+        for (int i = 0; i < 5; i++)
+        {
+            if (guessArray[i] == wordArrayCopy[i])
             {
-                if (i < wordArray.Length && guessArray[i] == wordArray[i])
+                tempResult[i] = "green";
+                //Mark it as used
+                wordArrayCopy[i] = ' ';
+            }
+        }
+
+        //Second pass- Mark misplaced letters
+        for (int i = 0; i < 5; i++)
+        {
+            if (tempResult[i] != "green")
+            {
+                bool found = false;
+                for (int j = 0; j < 5; j++)
                 {
-                    //Letter is correct and in the right spot
-                    result[i] = "correct";
+                    //Check if the letter exists
+                    if (wordArrayCopy[j] == guessArray[i])
+                    {
+                        tempResult[i] = "yellow";
+                        //Mark as used
+                        wordArrayCopy[j] = ' ';
+                        found = true;
+                        //Stop searching after first occurance
+                        break;
+                    }
                 }
-                else if (chosenWord.Contains(guessArray[i]))
+                if (!found)
                 {
-                    //Letter is correct but in the wrong spot
-                    result[i] = "contains";
-                }
-                else
-                {
-                    //Letter is not in the word
-                    result[i] = "wrong";
+                    tempResult[i] = "gray";
                 }
             }
-            currentAttempt--;
-            return result;
         }
+
+        result = tempResult;
+        currentAttempt++;
+
+        if (currentAttempt >= maxAttempts)
+        {
+            gameView.ShowLoseCanvas();
+        }
+        return result;
     }
+       
 
     //Reset board for next round
     public void NextRound()
     {
         currentAttempt = 0;
         ChoseRandomWord();
+        score = 0;
+        gameView.UpdateScore(score);
         gameView.ResetBoard();
         gameView.ClearUserInput();
 
