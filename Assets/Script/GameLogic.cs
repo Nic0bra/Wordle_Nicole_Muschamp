@@ -61,10 +61,10 @@ public class GameLogic : MonoBehaviour
         string formatUserGuess = userGuess.Trim().ToLower();
 
         //Check if the word is in allowed words or possible answers
-        //bool isValidWord = allowedWordsList.Contains(formatUserGuess) || possibleAnswersList.Contains(formatUserGuess);
+        bool isValidWord = allowedWordsList.Contains(formatUserGuess) || possibleAnswersList.Contains(formatUserGuess);
 
         //Display ivalid canvas if not a real word or empty
-        if (!(allowedWordsList.Contains(formatUserGuess) || possibleAnswersList.Contains(formatUserGuess)) || string.IsNullOrEmpty(formatUserGuess))
+        if (!isValidWord || string.IsNullOrEmpty(formatUserGuess))
         {
             gameView.ShowInvalidCanvas();
             return new string[0];
@@ -84,15 +84,21 @@ public class GameLogic : MonoBehaviour
         //Convert words to char arrays
         char[] guessArray = formatUserGuess.ToCharArray();
         char[] wordArray = chosenWord.ToLower().ToCharArray();
+
+        //Copy chosen word to track which letters have been matched
         char[] wordArrayCopy = (char[])wordArray.Clone();
+
+        //Store color for each letter in user's guess
         string[] tempResult = new string[5];
 
         //First pass- Mark correct letters in the correct positions
         for (int i = 0; i < 5; i++)
         {
+            //If the word is the word put green in the result array
             if (guessArray[i] == wordArrayCopy[i])
             {
                 tempResult[i] = "green";
+
                 //Mark it as used
                 wordArrayCopy[i] = ' ';
             }
@@ -101,8 +107,10 @@ public class GameLogic : MonoBehaviour
         //Second pass- Mark misplaced letters
         for (int i = 0; i < 5; i++)
         {
+            //If the letter placement is not already green
             if (tempResult[i] != "green")
             {
+                //Check if it exists in the word at all
                 bool found = false;
                 for (int j = 0; j < 5; j++)
                 {
