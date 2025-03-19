@@ -51,15 +51,18 @@ public class GameMediator : MonoBehaviour
         if(gameLogic != null && gameView != null)
         {
             string userGuess = GetUserInput();
-            if (!string.IsNullOrEmpty(userGuess))
+
+            if (!gameLogic.IsValidWord(userGuess))
             {
-                string[] guessResult = gameLogic.CheckGuess(userGuess);
-                if(gameLogic.currentAttempt < gameLogic.maxAttempts)
-                {
-                    gameView.GuessLetterDisplay(gameLogic.currentAttempt, userGuess.ToCharArray().Select(c => c.ToString()).ToArray());
-                    gameView.ChangeSquareColor(gameLogic.currentAttempt, guessResult);
-                    gameView.ClearUserInput();
-                }
+                gameView.ShowInvalidCanvas();
+                return;
+            }
+            string[] guessResult = gameLogic.CheckGuess(userGuess);
+            if(gameLogic.currentAttempt < gameLogic.maxAttempts)
+            {
+                gameView.GuessLetterDisplay(gameLogic.currentAttempt, userGuess.ToCharArray().Select(c => c.ToString()).ToArray());
+                gameView.ChangeSquareColor(gameLogic.currentAttempt, guessResult);
+                gameView.ClearUserInput();
             }
         }
     }

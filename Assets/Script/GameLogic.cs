@@ -48,6 +48,20 @@ public class GameLogic : MonoBehaviour
         chosenWord = possibleAnswersList[randomIndex].Trim();
     }
 
+    //Check if the word is valid
+    public bool IsValidWord(string userGuess)
+    {
+        string formatUserGuess = userGuess.Trim().ToLower();
+
+        if (string.IsNullOrEmpty(formatUserGuess) || !(allowedWordsList.Contains(formatUserGuess) ||
+               possibleAnswersList.Contains(formatUserGuess)))
+        {
+            return false;
+        }
+        else
+            return true;
+    }
+
     //Check the user guess against chosen random word
     public string[] CheckGuess(string userGuess)
     {
@@ -59,18 +73,6 @@ public class GameLogic : MonoBehaviour
         }
 
         string formatUserGuess = userGuess.Trim().ToLower();
-
-        //Check if the word is in allowed words or possible answers
-        bool isValidWord = allowedWordsList.Contains(formatUserGuess) || possibleAnswersList.Contains(formatUserGuess);
-
-        //Display ivalid canvas if not a real word or empty
-        if (!isValidWord || string.IsNullOrEmpty(formatUserGuess))
-        {
-            gameView.ShowInvalidCanvas();
-            return new string[0];
-        }
-
-        string[] result = new string[5];
 
         //If the word is the chosen word
         if (formatUserGuess == chosenWord.ToLower())
@@ -132,7 +134,7 @@ public class GameLogic : MonoBehaviour
             }
         }
 
-        result = tempResult;
+        string[] result = tempResult;
         currentAttempt++;
 
         if (currentAttempt >= maxAttempts)
