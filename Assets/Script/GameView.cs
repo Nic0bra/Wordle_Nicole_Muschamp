@@ -4,13 +4,17 @@ using UnityEngine.UI;
 
 public class GameView : MonoBehaviour
 {
+    //Reference other scripts
     [SerializeField] GameMediator gameMediator;
-    //Game Canvas to be dispalyed
+
+    //Reference for all canvases
     [SerializeField] GameObject startCanvas;
     [SerializeField] GameObject gameCanvas;
     [SerializeField] GameObject winCanvas;
     [SerializeField] GameObject loseCanvas;
     [SerializeField] GameObject invalidCanvas;
+    
+    //Stores current invalid canvas object
     GameObject currentInvalidCanvas;
 
     //Text Fields to be displayed
@@ -21,7 +25,7 @@ public class GameView : MonoBehaviour
     [SerializeField] TMP_Text chosenWordLoseCanvas;
     [SerializeField] TMP_Text chosenWordWinCanvas;
 
-    //Arrays to access game board
+    //Arrays to access game board rows of letter buttons
     [SerializeField] Button[] guessRowOne;
     [SerializeField] Button[] guessRowTwo;
     [SerializeField] Button[] guessRowThree;
@@ -69,9 +73,10 @@ public class GameView : MonoBehaviour
         chosenWordLoseCanvas.text = chosenWord.ToString();
     }
 
-    //Show invalid canvas
+    //Instantiate and show invalid canvas
     public void ShowInvalidCanvas()
     {
+        //If the invalid canvas is already displayed destroy it before showing another
         if (currentInvalidCanvas != null)
         {
             currentInvalidCanvas.SetActive(false);
@@ -81,7 +86,7 @@ public class GameView : MonoBehaviour
         currentInvalidCanvas.SetActive(true);
     }
 
-    //Hide invalid canvas
+    //Hide and destroy invalid canvas
     public void HideInvalidCanvas()
     {
         if (currentInvalidCanvas != null)
@@ -105,11 +110,12 @@ public class GameView : MonoBehaviour
         userInput.text = "";
     }
 
-    //Display the guessed Letter
+    //Display the guessed Letter in the correct row 
     public void GuessLetterDisplay(int guessRow, string[] letters)
     {
         Button[] currentRow = null;
 
+        //Select the correct row based on the current attempt
         switch (guessRow)
         {
             case 1:
@@ -128,7 +134,7 @@ public class GameView : MonoBehaviour
                 currentRow = guessRowFive;
                 break;
         }
-
+        //Set the text of each button in the row to the right letter
         for (int i = 0; i < currentRow.Length; i++)
         {
             currentRow[i].GetComponentInChildren<TMP_Text>().text = letters[i].ToLower();
@@ -136,11 +142,12 @@ public class GameView : MonoBehaviour
     }
 
 
-    //Change the square color based on condition
+    //Change the square color based on guess results
     public void ChangeSquareColor(int guessRow, string[] guessResults)
     {
         Button[] currentRow = null;
 
+        //Select the correct row based on the current attempt
         switch (guessRow)
         {
             case 1:
@@ -160,6 +167,7 @@ public class GameView : MonoBehaviour
                 break;
         }
 
+        //Set the color of each button based on guess results
         for (int i = 0; i < currentRow.Length; i++)
         {
             //Default color white
@@ -192,6 +200,7 @@ public class GameView : MonoBehaviour
     {
         Button[][] allRows = { guessRowOne, guessRowTwo, guessRowThree, guessRowFour, guessRowFive };
 
+        //Resets the color and text for all buttons
         foreach (Button[] row in allRows)
         {
             foreach (Button button in row)
